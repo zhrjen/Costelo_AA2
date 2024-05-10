@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up</title>
+	
+    <style>
+        body {
+            margin: 0;
+            padding: 2px;
+            background-image: linear-gradient(90deg, #99c2ff,  #b3ffcc);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: calc(100% - 10px);
+            padding: 10px;
+            border: 0.5px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #4568DC;
+            outline: none;
+        }
+        .form-group.invalid input, .form-group.invalid select, .form-group.invalid textarea {
+            border-color: #e74c3c;
+        }
+        .form-group.valid input, .form-group.valid select, .form-group.valid textarea {
+            border-color: #2ecc71;
+        }
+        .btn-container {
+            text-align: center;
+        }
+        .btn {
+		
+            padding: 10px 20px;
+			margin: 10px;
+            background-color: #00ffcc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #ffb3b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .output p {
+            margin: 5px 0;
+			
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Get started with your Account</h2>
+        <form id="signupForm">
+            <fieldset>
+                <legend>User Information</legend>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required onblur="validateInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="username">Preferred Username</label>
+                    <input type="text" id="username" placeholder="Enter preferred username" required onblur="validateInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" required onblur="validateInput(this)">
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required onblur="validateInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required onblur="validateInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="Enter your address" required onblur="validateInput(this)">
+                </div>
+                <div class="form-group">
+                    <label for="interest">Interests</label>
+                    <textarea id="interest" rows="3" placeholder="Enter your interests" required onblur="validateInput(this)"></textarea>
+                </div>
+            </fieldset>
+            <div class="btn-container">
+                <button type="submit" class="btn">Submit</button>
+                <button type="reset" class="btn">Reset</button>
+            </div>
+        </form>
+    </div>
+    
+    <div class="container output" id="output"></div>
+
+    <script>
+        function validateInput(input) {
+            if (input.value.trim() === '') {
+                input.parentElement.classList.remove('valid');
+                input.parentElement.classList.add('invalid');
+            } else {
+                input.parentElement.classList.remove('invalid');
+                input.parentElement.classList.add('valid');
+            }
+        }
+
+        function submitForm() {
+            const form = document.getElementById('signupForm');
+            const output = document.getElementById('output');
+            const name = form.elements['name'].value;
+            const username = form.elements['username'].value;
+            const gender = form.elements['gender'].value;
+            const password = form.elements['password'].value;
+            const email = form.elements['email'].value;
+            const address = form.elements['address'].value;
+            const interest = form.elements['interest'].value;
+
+            output.innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Preferred Username:</strong> ${username}</p>
+                <p><strong>Gender:</strong> ${gender}</p>
+                <p><strong>Password:</strong> ${password}</p>
+                <p><strong>Email Address:</strong> ${email}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <p><strong>Interests:</strong> ${interest}</p>
+            `;
+            output.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        const form = document.getElementById('signupForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitForm();
+        });
+
+        form.addEventListener('reset', function() {
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach(group => {
+                group.classList.remove('valid', 'invalid');
+            });
+            document.getElementById('output').innerHTML = '';
+        });
+    </script>
+</body>
+</html>
